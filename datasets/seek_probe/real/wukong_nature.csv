@@ -1,0 +1,5 @@
+num,imagepath,IsFake
+1,imagenet_ai_0424_wukong/train/nature/ILSVRC2012_val_00000163.JPEG,0
+2,imagenet_ai_0424_wukong/train/nature/ILSVRC2012_val_00000115.JPEG,0
+3,imagenet_ai_0424_wukong/train/nature/ILSVRC2012_val_00000107.JPEG,0
+4,imagenet_ai_0424_wukong/train/nature/ILSVRC2012_val_00000043.JPEG,0
