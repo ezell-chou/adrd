@@ -23,33 +23,18 @@ The rapid advancement of diffusion models has raised concerns about their misuse
 
 ### Installation Steps
 
-#### 1. Create Virtual Environment
-
 ```bash
 # Using conda (recommended)
 conda create -n adrd python=3.9
 conda activate adrd
 
-# Or using venv
-python3.9 -m venv adrd_env
-source adrd_env/bin/activate  # Linux/macOS
-# Or
-adrd_env\Scripts\activate  # Windows
-```
-
-#### 2. Install Dependencies
-
-```bash
 # Install all dependencies from requirements.txt
 pip install -r requirements.txt
 
 # If using GPU (CUDA 11.x), you may need to manually install PyTorch
 # pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-```
 
-#### 3. Verify Installation
-
-```bash
+# Verify installation
 python -c "import torch; print(f'PyTorch: {torch.__version__}')"
 python -c "import diffusers; print(f'Diffusers: {diffusers.__version__}')"
 python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
@@ -86,7 +71,7 @@ Download the following files to the `models/sd_v1_5` directory:
 
 1. **text_encoder**
    - `config.json`
-   - `pytorch_model.bin`
+   - `pytorch_model.safetensors`
 
 2. **tokenizer**
    - `merges.txt`
@@ -96,11 +81,11 @@ Download the following files to the `models/sd_v1_5` directory:
 
 3. **unet**
    - `config.json`
-   - `diffusion_pytorch_model.bin`
+   - `diffusion_pytorch_model.safetensors`
 
 4. **vae**
    - `config.json`
-   - `diffusion_pytorch_model.bin`
+   - `diffusion_pytorch_model.safetensors`
 
 5. **Other files**
    - `model_index.json`
@@ -120,7 +105,7 @@ Expected directory structure:
 models/sd_v1_5/
 ├── text_encoder/
 │   ├── config.json
-│   └── pytorch_model.bin
+│   └── pytorch_model.safetensors
 ├── tokenizer/
 │   ├── merges.txt
 │   ├── special_tokens_map.json
@@ -128,10 +113,10 @@ models/sd_v1_5/
 │   └── vocab.json
 ├── unet/
 │   ├── config.json
-│   └── diffusion_pytorch_model.bin
+│   └── diffusion_pytorch_model.safetensors
 ├── vae/
 │   ├── config.json
-│   └── diffusion_pytorch_model.bin
+│   └── diffusion_pytorch_model.safetensors
 ├── model_index.json
 └── scheduler/
     └── config.json
@@ -180,6 +165,10 @@ python utils/generate_dataset.py \
 **Output**:
 - `<dataset_name>_ai.csv` - AI-generated image list
 - `<dataset_name>_nature.csv` - Real image list
+
+#### 0.2 Using Dataset Path Index
+
+Modify the `IMAGE_ROOT` parameter in `BaseConfig` within `configs/config.py` to point to your actual dataset path. For example: `D:\GenImage`
 
 ---
 
@@ -339,7 +328,7 @@ python train_eval.py \
 |-----------|---------|-------------|
 | `NETWORK` | `BetterCNN` | Network architecture (SimpleCNN/BetterCNN/FusionCNN/AttentionCNN) |
 | `EPOCHS` | `50` | Training epochs |
-| `BATCH_SIZE` | `8` | Batch processing size |
+| `BATCH_SIZE` | `1` | Batch processing size |
 | `LEARNING_RATE` | `1e-3` | Learning rate |
 | `SPLIT_RATIO` | `0.7` | Train/validation split ratio |
 | `RETRAIN_TIMES` | `3` | Repetitions per subset |
@@ -416,7 +405,7 @@ Used by `train_eval.py`:
 - `SAVE_MODELS`: Model save directory
 - `RESULTS`: Results save directory
 - `EPOCHS`: Training epochs (50)
-- `BATCH_SIZE`: Batch size (8)
+- `BATCH_SIZE`: Batch size (1)
 - `LEARNING_RATE`: Learning rate (1e-3)
 - `SPLIT_RATIO`: Train/validation split (0.7)
 - `RETRAIN_TIMES`: Repetitions (3)
