@@ -148,7 +148,7 @@ def _save_json_results(
         raise TypeError
     
     output_dir = Path(output_path).parent
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
     
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2, default=convert)
@@ -239,7 +239,7 @@ def train_one_subset(
 
     # Save best weights
     models_dir = Path(save_models)
-    models_dir.mkdir(exist_ok=True)
+    models_dir.mkdir(parents=True, exist_ok=True)
     best_path = models_dir / f'{sub_name}_run{run_idx}.pth'
 
     torch.save(early_stop.best_state, best_path)

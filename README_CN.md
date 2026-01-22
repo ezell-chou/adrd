@@ -23,27 +23,15 @@
 
 ### 安装步骤
 
-#### 1. 创建虚拟环境
-
 ```bash
 # 使用 conda（推荐）
 conda create -n adrd python=3.9
 conda activate adrd
 
-
 #### 2. 安装依赖
-
-```bash
-# 安装 requirements.txt 中的所有依赖
 pip install -r requirements.txt
 
-# 如果使用 GPU（CUDA 11.x），可能需要手动安装 PyTorch
-# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-```
-
 #### 3. 验证安装
-
-```bash
 python -c "import torch; print(f'PyTorch: {torch.__version__}')"
 python -c "import diffusers; print(f'Diffusers: {diffusers.__version__}')"
 python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
@@ -80,7 +68,7 @@ huggingface-cli download stable-diffusion-v1-5/stable-diffusion-v1-5 \
 
 1. **text_encoder**
    - `config.json`
-   - `pytorch_model.bin`
+   - `pytorch_model.safetensors`
 
 2. **tokenizer**
    - `merges.txt`
@@ -90,11 +78,11 @@ huggingface-cli download stable-diffusion-v1-5/stable-diffusion-v1-5 \
 
 3. **unet**
    - `config.json`
-   - `diffusion_pytorch_model.bin`
+   - `diffusion_pytorch_model.safetensors`
 
 4. **vae**
    - `config.json`
-   - `diffusion_pytorch_model.bin`
+   - `diffusion_pytorch_model.safetensors`
 
 5. **其他文件**
    - `model_index.json`
@@ -114,7 +102,7 @@ ls -la models/sd_v1_5/
 models/sd_v1_5/
 ├── text_encoder/
 │   ├── config.json
-│   └── pytorch_model.bin
+│   └── pytorch_model.safetensors
 ├── tokenizer/
 │   ├── merges.txt
 │   ├── special_tokens_map.json
@@ -122,10 +110,10 @@ models/sd_v1_5/
 │   └── vocab.json
 ├── unet/
 │   ├── config.json
-│   └── diffusion_pytorch_model.bin
+│   └── diffusion_pytorch_model.safetensors
 ├── vae/
 │   ├── config.json
-│   └── diffusion_pytorch_model.bin
+│   └── diffusion_pytorch_model.safetensors
 ├── model_index.json
 └── scheduler/
     └── config.json
@@ -138,6 +126,8 @@ models/sd_v1_5/
 项目包含 5 个主要步骤的完整工作流程。所有脚本都支持默认配置运行，也可以通过命令行参数进行自定义。
 
 ### 步骤 0: 数据集生成（可选）
+
+#### 0.1 使用现成脚本生成数据集
 
 使用 `generate_dataset.py` 从 GenImage 数据集采样生成 CSV 索引文件。
 
@@ -174,6 +164,12 @@ python utils/generate_dataset.py \
 **输出**：
 - `<dataset_name>_ai.csv` - AI 生成图像列表
 - `<dataset_name>_nature.csv` - 真实图像列表
+
+---
+#### 0.2 使用现成数据集路径索引
+
+修改`configs/config.py`中`BaseConfig`下`IMAGE_ROOT`参数为实际数据集路径，例如： `D:\GenImage`
+
 
 ---
 
@@ -333,7 +329,7 @@ python train_eval.py \
 |------|-------|------|
 | `NETWORK` | `BetterCNN` | 网络架构（SimpleCNN/BetterCNN/FusionCNN/AttentionCNN） |
 | `EPOCHS` | `50` | 训练轮数 |
-| `BATCH_SIZE` | `8` | 批处理大小 |
+| `BATCH_SIZE` | `1` | 批处理大小 |
 | `LEARNING_RATE` | `1e-3` | 学习率 |
 | `SPLIT_RATIO` | `0.7` | 训练/验证分割比例 |
 | `RETRAIN_TIMES` | `3` | 每个子集重复训练次数 |

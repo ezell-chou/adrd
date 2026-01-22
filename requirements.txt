@@ -49,8 +49,8 @@ six==1.17.0
 sympy==1.13.1
 threadpoolctl==3.6.0
 tokenizers==0.22.2
-torch @ file:///D:/torch-2.5.1%2Bcu121-cp39-cp39-win_amd64.whl#sha256=dc4249c520a6e9b1555e46bd70586a7cf33012800a51acb58a0c51464e3a786a
-torchvision @ file:///D:/torchvision-0.20.1%2Bcu121-cp39-cp39-win_amd64.whl#sha256=4aea5f2e7e0f18ba60a15a542ba5bc691ce8af4d7a5c1dd2f252e8c4ff2bef15
+torch ==2.5.1+cu121
+torchvision==0.20.1+cu121
 tqdm==4.67.1
 transformers==4.57.3
 typer-slim==0.21.1

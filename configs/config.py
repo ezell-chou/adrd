@@ -78,7 +78,7 @@ class TrainConfig(BaseConfig):
     # =========================================================================
     SPLIT_RATIO = 0.7                                        # Train/test split ratio (0.7 = 70% train, 30% test)
     EPOCHS = 50                                              # Number of training epochs
-    BATCH_SIZE = 8                                           # Batch size for training
+    BATCH_SIZE = 1                                           # Batch size for training
     LEARNING_RATE = 1e-3                                     # Initial learning rate for optimizer
     N_EVAL_RUNS = 1                                          # Number of evaluation runs
     
